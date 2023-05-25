@@ -26,15 +26,14 @@ pub fn divide(a: i32, b: i32) -> Result<i32, DivisionError> {
         return Err(DivisionError::DivideByZero);
     }
     if a % b == 0 {
-        Ok(a / b)
-    } else {
-        Err(DivisionError::NotDivisible(
-            NotDivisibleError {
-                dividend: a,
-                divisor: b,
-            }
-        ))
+        return Ok(a / b);
     }
+    Err(DivisionError::NotDivisible(
+        NotDivisibleError {
+            dividend: a,
+            divisor: b,
+        }
+    ))
 }
 
 // Complete the function and return a value of the correct type so the test passes.
@@ -51,7 +50,8 @@ fn result_with_list() -> Result<Vec<i32>, DivisionError> {
 // Desired output: [Ok(1), Ok(11), Ok(1426), Ok(3)]
 fn list_of_results() -> Vec<Result<i32, DivisionError>> {
     let numbers = vec![27, 297, 38502, 81];
-    numbers.into_iter()
+    numbers
+        .into_iter()
         .map(|n| divide(n, 27))
         .collect()
 }
